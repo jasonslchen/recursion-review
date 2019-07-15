@@ -15,10 +15,29 @@ var stringifyJSON = function(obj) {
     for (let i = 0; i < obj.length; i++) {
       resultsArray.push(stringifyJSON(obj[i]));
     }
-    let results = resultsArray.join(', ')
+    let results = resultsArray.join(',');
     return '[' + results + ']';
+  } else if (typeof obj === 'object') {
+
+
+
+    let pairsArray = [];
+    var keysArray = Object.keys(obj);
+
+    for (var i = 0; i < keysArray.length; i++) {
+      if (typeof keysArray[i] === 'function' || typeof obj[keysArray[i]] === 'function' || keysArray[i] === undefined || obj[keysArray[i]] === undefined) {
+        continue;
+      }
+      var keyValuePair = "";
+      keyValuePair = stringifyJSON(keysArray[i]) + ":" + stringifyJSON(obj[keysArray[i]]);
+      pairsArray.push(keyValuePair);
+    }
+
+    let results = pairsArray.join(',');
+    return "{" + results + "}";
   }
 
 
 };
+
 
